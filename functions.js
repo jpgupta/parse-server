@@ -13,7 +13,12 @@ function handleCloudFunction(req) {
     return new Promise(function (resolve, reject) {
       var response = createResponseObject(resolve, reject);
       var request = {
-        params: req.body || {}
+        params: req.body || {},
+        user: {
+          getSessionToken: function() {
+            return req.info.sessionToken;
+          }
+        }
       };
       Parse.Cloud.Functions[req.params.functionName](request, response);
     });
