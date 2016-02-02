@@ -14,11 +14,7 @@ function handleCloudFunction(req) {
       var response = createResponseObject(resolve, reject);
       var request = {
         params: req.body || {},
-        user: {
-          getSessionToken: function() {
-            return req.info.sessionToken;
-          }
-        }
+        user: req.auth && req.auth.user || {}
       };
       Parse.Cloud.Functions[req.params.functionName](request, response);
     });
